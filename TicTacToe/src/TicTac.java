@@ -131,6 +131,7 @@ public class TicTac implements ActionListener {
             oWins(2,4,6);
 
     }
+// _____________ this function updated 
     public void xWins(int x , int y , int z){
         System.out.println(x +" "+ " " + y +" " + z);
         btns[x].setBackground(Color.red);
@@ -140,7 +141,11 @@ public class TicTac implements ActionListener {
             btns[i].setEnabled(false);
         }
         textlabel.setText("X WON ");
+        // this is the added call
+        Alert playAgain = new Alert(frame) ;
     }
+// _____________ this function updated 
+
     public void oWins(int x , int y , int z){
         System.out.println(x +" "+ " " + y +" " + z);
         btns[x].setBackground(Color.red);
@@ -150,5 +155,8 @@ public class TicTac implements ActionListener {
             btns[i].setEnabled(false);
         }
         textlabel.setText("Y WON ");
+        // this is the added call
+        Alert playAgain = new Alert(frame) ;
+
     }
 }
