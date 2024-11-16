@@ -8,6 +8,8 @@ import java.util.Random;
 import javax.swing.*;
 
 public class TicTac implements ActionListener {
+    Settings setting = new Settings() ;
+
     Random random = new Random();
     JFrame frame = new JFrame();
     JButton[] btns = new JButton[9] ;
@@ -15,13 +17,30 @@ public class TicTac implements ActionListener {
     JPanel titlepanel = new JPanel() ;
     JLabel textlabel = new JLabel() ;
     boolean playerTurn ;
+    String  player_one_sign  = "@" ;
+    String  player_two_sign  = "#" ;
+    String winner_color  = "red" ;
+    String player_one_color = "yellow";
+    String player_two_color = "Green";
+    JMenuBar menuBar ;
+    JMenu menu ;
+    JMenuItem Setting ;
 
-
+    
     public TicTac(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
+        // ____________
+        // menu = new JMenu() ;
+        // menuBar = new JMenuBar() ;
+        // Setting = new JMenuItem() ;
+
+        // menu.add(Setting);
+        // menuBar.add(menu);
+        // frame.setMenuBar(menuBar);
+        // ____________
 
         textlabel.setBackground(Color.blue);
         textlabel.setForeground(Color.red);
@@ -51,6 +70,19 @@ public class TicTac implements ActionListener {
         titlepanel.add(textlabel);
         frame.add(titlepanel, BorderLayout.NORTH);
         frame.add(btnpanel);
+                // Add the menu bar from the Settings class
+                frame.setJMenuBar(setting.getMenuBar());
+
+                // Add a listener for the Settings menu item
+                setting.addSettingsListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Handle the settings menu item click event
+                        System.out.println("Settings clicked!");
+                        setting.showSettings() ;
+                        // You can add code here to open a settings window or modify game settings
+                    }
+                });
 
         firstTurn();
     }
@@ -61,18 +93,18 @@ public class TicTac implements ActionListener {
             if(e.getSource() == btns[i]){
                 if(playerTurn){
                     if(Objects.equals(btns[i].getText(), "")){
-                        btns[i].setText("X");
+                        btns[i].setText(player_one_sign);
                          btns[i].setForeground(Color.green);
                         playerTurn = false;
-                        textlabel.setText("O TURN ");
+                        textlabel.setText(player_two_sign + " TURN ");
                         checkWinner();
                     }
                 }else{
                     if(Objects.equals(btns[i].getText(), "")){
-                        btns[i].setText("O");
+                        btns[i].setText(player_two_sign);
                         playerTurn = true;
                         btns[i].setForeground(Color.yellow);
-                        textlabel.setText("X TURN ");
+                        textlabel.setText(player_one_sign + " TURN ");
                         checkWinner();
                     }
                 }
@@ -83,51 +115,51 @@ public class TicTac implements ActionListener {
 
     public void firstTurn(){
         if(random.nextInt(2)==0){
-            System.out.println("X turn");
+            System.out.println(player_one_sign + " turn");
             playerTurn = true;
-            textlabel.setText("X TURN");
+            textlabel.setText(player_one_sign +" TURN");
         }else{
             playerTurn = false;
-            System.out.println("O turn");
-            textlabel.setText("O TURN");
+            System.out.println(player_two_sign + " turn");
+            textlabel.setText(player_two_sign + " TURN");
 
         }
 
     }
 
     public void checkWinner(){
-        if( btns[0].getText().equals("X") && btns[1].getText().equals("X") && btns[2].getText().equals("X") )
+        if( btns[0].getText().equals(player_one_sign) && btns[1].getText().equals(player_one_sign) && btns[2].getText().equals(player_one_sign) )
             xWins(0,1,2);
-        if( btns[0].getText().equals("X") && btns[3].getText().equals("X") && btns[6].getText().equals("X") )
+        if( btns[0].getText().equals(player_one_sign) && btns[3].getText().equals(player_one_sign) && btns[6].getText().equals(player_one_sign) )
             xWins(0,3,6);
-        if( btns[0].getText().equals("X") && btns[4].getText().equals("X") && btns[8].getText().equals("X") )
+        if( btns[0].getText().equals(player_one_sign) && btns[4].getText().equals(player_one_sign) && btns[8].getText().equals(player_one_sign) )
             xWins(0,4,8);
-        if( btns[1].getText().equals("X") && btns[4].getText().equals("X") && btns[7].getText().equals("X") )
+        if( btns[1].getText().equals(player_one_sign) && btns[4].getText().equals(player_one_sign) && btns[7].getText().equals(player_one_sign) )
             xWins(1,4,7);
-        if( btns[2].getText().equals("X") && btns[5].getText().equals("X") && btns[8].getText().equals("X") )
+        if( btns[2].getText().equals(player_one_sign) && btns[5].getText().equals(player_one_sign) && btns[8].getText().equals(player_one_sign) )
             xWins(2,5,8);
-        if( btns[6].getText().equals("X") && btns[7].getText().equals("X") && btns[8].getText().equals("X") )
+        if( btns[6].getText().equals(player_one_sign) && btns[7].getText().equals(player_one_sign) && btns[8].getText().equals(player_one_sign) )
             xWins(6,7,8);
-        if( btns[3].getText().equals("X") && btns[4].getText().equals("X") && btns[5].getText().equals("X") )
+        if( btns[3].getText().equals(player_one_sign) && btns[4].getText().equals(player_one_sign) && btns[5].getText().equals(player_one_sign) )
             xWins(3,4,5);
-        if( btns[2].getText().equals("X") && btns[4].getText().equals("X") && btns[6].getText().equals("X") )
+        if( btns[2].getText().equals(player_one_sign) && btns[4].getText().equals(player_one_sign) && btns[6].getText().equals(player_one_sign) )
             xWins(2,4,6);
 // ___________ O CHECKING FOR WIN
-        if( btns[0].getText().equals("O") && btns[1].getText().equals("O") && btns[2].getText().equals("O") )
+        if( btns[0].getText().equals(player_two_sign) && btns[1].getText().equals(player_two_sign) && btns[2].getText().equals(player_two_sign) )
             oWins(0,1,2);
-        if( btns[0].getText().equals("O") && btns[3].getText().equals("O") && btns[6].getText().equals("O") )
+        if( btns[0].getText().equals(player_two_sign) && btns[3].getText().equals(player_two_sign) && btns[6].getText().equals(player_two_sign) )
             oWins(0,3,6);
-        if( btns[0].getText().equals("O") && btns[4].getText().equals("O") && btns[8].getText().equals("O") )
+        if( btns[0].getText().equals(player_two_sign) && btns[4].getText().equals(player_two_sign) && btns[8].getText().equals(player_two_sign) )
             oWins(0,4,8);
-        if( btns[1].getText().equals("O") && btns[4].getText().equals("O") && btns[7].getText().equals("O") )
+        if( btns[1].getText().equals(player_two_sign) && btns[4].getText().equals(player_two_sign) && btns[7].getText().equals(player_two_sign) )
             oWins(1,4,7);
-        if( btns[2].getText().equals("O") && btns[5].getText().equals("O") && btns[8].getText().equals("O") )
+        if( btns[2].getText().equals(player_two_sign) && btns[5].getText().equals(player_two_sign) && btns[8].getText().equals(player_two_sign) )
             oWins(2,5,8);
-        if( btns[6].getText().equals("O") && btns[7].getText().equals("O") && btns[8].getText().equals("O") )
+        if( btns[6].getText().equals(player_two_sign) && btns[7].getText().equals(player_two_sign) && btns[8].getText().equals(player_two_sign) )
             oWins(6,7,8);
-        if( btns[3].getText().equals("O") && btns[4].getText().equals("O") && btns[5].getText().equals("O") )
+        if( btns[3].getText().equals(player_two_sign) && btns[4].getText().equals(player_two_sign) && btns[5].getText().equals(player_two_sign) )
             oWins(3,4,5);
-        if( btns[2].getText().equals("O") && btns[4].getText().equals("O") && btns[6].getText().equals("O") )
+        if( btns[2].getText().equals(player_two_sign) && btns[4].getText().equals(player_two_sign) && btns[6].getText().equals(player_two_sign) )
             oWins(2,4,6);
 
     }
@@ -140,7 +172,7 @@ public class TicTac implements ActionListener {
         for (int i = 0; i < 9; i++) {
             btns[i].setEnabled(false);
         }
-        textlabel.setText("X WON ");
+        textlabel.setText(player_one_sign + " WON ");
         // this is the added call
         Alert playAgain = new Alert(frame) ;
     }
@@ -154,9 +186,10 @@ public class TicTac implements ActionListener {
         for (int i = 0; i < 9; i++) {
             btns[i].setEnabled(false);
         }
-        textlabel.setText("Y WON ");
+        textlabel.setText(player_two_sign + " WON ");
         // this is the added call
         Alert playAgain = new Alert(frame) ;
 
     }
 }
+
